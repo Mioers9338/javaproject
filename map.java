@@ -44,9 +44,83 @@ public class map {
         }
     }
 
-    public void move(){
-        for(int i = 0; i < cells.size(); ++i) {
+    public void move() {
+        for (int i = 0; i < cells.size(); ++i) {
             move(cells.get(i));
+        }
+    }
+
+    public int[] perception(cell c) {
+        int Redcount = 0;
+        int Greencount = 0;
+        int Bluecount = 0;
+        int Yellowcount = 0;
+        for (int i = 0; i < cells.size(); ++i) {
+            if (c.iswithin(cells.get(i))) {
+                Color color = cells.get(i).getColor();
+                if (color == Color.RED) {
+                    Redcount = Redcount + 1;
+                }
+                if (color == Color.GREEN) {
+                    Greencount = Greencount + 1;
+                }
+                if (color == Color.BLUE) {
+                    Bluecount = Bluecount + 1;
+                }
+                if (color == Color.YELLOW) {
+                    Yellowcount = Yellowcount + 1;
+                }
+            }
+        }
+        int[] a = new int[]{Redcount,Greencount, Bluecount, Yellowcount};
+        return a;
+    }
+
+    public void changecolor(){
+        List<Color> cs = new ArrayList<>();
+        for (int i = 0; i < cells.size(); ++i) {
+            int[] Ps = perception(cells.get(i));
+            int Pall = Ps[0]+Ps[1]+Ps[2]+Ps[3];
+            Color color = cells.get(i).getColor();
+            if(color==Color.RED){
+                if(Ps[0]>=3){
+                    if(Ps[0]>0.7*Pall)cs.add(Color.GREEN);
+                }else if(Ps[3]>=1){
+                    if(Ps[3]<0.1*Pall)cs.add(Color.yellow);
+                }else{
+                    cs.add(Color.RED);
+                }
+            }
+            if(color==Color.GREEN){
+                if(Ps[1]>=3){
+                    if(Ps[1]>0.7*Pall)cs.add(Color.BLUE);
+                }else if(Ps[0]>=1){
+                    if(Ps[0]<0.1*Pall)cs.add(Color.RED);
+                }else{
+                    cs.add(Color.GREEN);
+                }
+            }
+            if(color==Color.BLUE){
+                if(Ps[2]>=3){
+                    if(Ps[2]>0.7*Pall)cs.add(Color.YELLOW);
+                }else if(Ps[1]>=1){
+                    if(Ps[1]<0.1*Pall)cs.add(Color.GREEN);
+                }else{
+                    cs.add(Color.BLUE);
+                }
+            }
+            if(color==Color.YELLOW){
+                if(Ps[3]>=3){
+                    if(Ps[3]>0.7*Pall)cs.add(Color.RED);
+                }else if(Ps[3]>=1){
+                    if(Ps[2]<0.1*Pall)cs.add(Color.BLUE);
+                }else{
+                    cs.add(Color.YELLOW);
+                }
+            }
+        }
+        for (int i = 0; i < cells.size(); ++i) {
+            cells.get(i).setColor(cs.get(i));
         }
     }
 
