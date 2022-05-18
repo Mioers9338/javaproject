@@ -8,7 +8,7 @@ public class cell {
     private double Perception;
     private double[] Wall;
 
-    public cell(int id, double r, double[] p, Color c, double perception, double[] Wall) {
+    public cell(int id, double r, double[] p, double perception,Color c , double[] Wall) {
         this.Identity = id;
         this.Radius = r;
         this.Position = p;
@@ -30,7 +30,7 @@ public class cell {
 
     public boolean insidewall() {
         boolean within = false;
-        if (Position[0] - Radius >= 0 && Position[1] - Radius >= 0 && Position[0] - Radius <= Wall[0] && Position[1] - Radius <= Wall[1]) {
+        if (Position[0] - Radius >= 0 && Position[1] - Radius >= 0 && Position[0] + Radius <= Wall[0] && Position[1] + Radius <= Wall[1]) {
             within = true;
         }
         return within;
@@ -50,19 +50,19 @@ public class cell {
 
     public double move_Red(cell b) {
         boolean hit = false;
-        if (b.getPosition()[1] <= Position[1] + 1 / 15 && b.getPosition()[1] >= Position[1]) {
+        if (b.getPosition()[1] <= Position[1] + (double)1/15 && b.getPosition()[1] >= Position[1]) {
             if (Math.abs(b.getPosition()[0] - Position[0]) < (b.getRadius() + Radius)) {
                 hit = true;
             }
         } else {
             double size = Radius + b.getRadius();
             double dis_x = Position[0] - b.getPosition()[0];
-            double dis_y = Position[1] + 1 / 15 - b.getPosition()[1];
+            double dis_y = Position[1] + (double)1/15 - b.getPosition()[1];
             double dis = Math.sqrt(dis_x * dis_x + dis_y * dis_y);
             if (size <= dis) hit = true;
         }
         if (!hit) {
-            return 1 / 15;
+            return (double)1/15;
         } else {
             double size = Radius + b.getRadius();
             double dis_x = Position[0] - b.getPosition()[0];
@@ -74,19 +74,19 @@ public class cell {
 
     public double move_Green(cell b) {
         boolean hit = false;
-        if (b.getPosition()[1] >= Position[1] - 1 / 15 && b.getPosition()[1] <= Position[1]) {
+        if (b.getPosition()[1] >= Position[1] - (double)1/15 && b.getPosition()[1] <= Position[1]) {
             if (Math.abs(b.getPosition()[0] - Position[0]) < (b.getRadius() + Radius)) {
                 hit = true;
             }
         } else {
             double size = Radius + b.getRadius();
             double dis_x = Position[0] - b.getPosition()[0];
-            double dis_y = Position[1] - 1 / 15 - b.getPosition()[1];
+            double dis_y = Position[1] - (double)1/15 - b.getPosition()[1];
             double dis = Math.sqrt(dis_x * dis_x + dis_y * dis_y);
             if (size <= dis) hit = true;
         }
         if (!hit) {
-            return 1 / 15;
+            return (double)1/15;
         } else {
             double size = Radius + b.getRadius();
             double dis_x = Position[0] - b.getPosition()[0];
@@ -98,19 +98,19 @@ public class cell {
 
     public double move_Blue(cell b) {
         boolean hit = false;
-        if (b.getPosition()[0] >= Position[0] - 1 / 15 && b.getPosition()[0] <= Position[0]) {
+        if (b.getPosition()[0] >= Position[0] - (double)1/15 && b.getPosition()[0] <= Position[0]) {
             if (Math.abs(b.getPosition()[1] - Position[1]) < (b.getRadius() + Radius)) {
                 hit = true;
             }
         } else {
             double size = Radius + b.getRadius();
-            double dis_x = Position[0] - 1 / 15 - b.getPosition()[0];
+            double dis_x = Position[0] - (double)1/15 - b.getPosition()[0];
             double dis_y = Position[1] - b.getPosition()[1];
             double dis = Math.sqrt(dis_x * dis_x + dis_y * dis_y);
             if (size <= dis) hit = true;
         }
         if (!hit) {
-            return 1 / 15;
+            return (double)1/15;
         } else {
             double size = Radius + b.getRadius();
             double dis_x = Position[0] - b.getPosition()[0];
@@ -122,19 +122,19 @@ public class cell {
 
     public double move_Yellow(cell b) {
         boolean hit = false;
-        if (b.getPosition()[0] <= Position[0] + 1 / 15 && b.getPosition()[0] >= Position[0]) {
+        if (b.getPosition()[0] <= Position[0] + (double)1/15 && b.getPosition()[0] >= Position[0]) {
             if (Math.abs(b.getPosition()[1] - Position[1]) < (b.getRadius() + Radius)) {
                 hit = true;
             }
         } else {
             double size = Radius + b.getRadius();
-            double dis_x = Position[0] + 1 / 15 - b.getPosition()[0];
+            double dis_x = Position[0] + (double)1/15 - b.getPosition()[0];
             double dis_y = Position[1] - b.getPosition()[1];
             double dis = Math.sqrt(dis_x * dis_x + dis_y * dis_y);
             if (size <= dis) hit = true;
         }
         if (!hit) {
-            return 1 / 15;
+            return (double)1/15;
         } else {
             double size = Radius + b.getRadius();
             double dis_x = Position[0] - b.getPosition()[0];
@@ -146,16 +146,16 @@ public class cell {
 
     public double move(cell c) {
         double dis = 0;
-        if (color == Color.red) {
+        if (color .equals( Color.red)) {
             dis = move_Red(c);
         }
-        if (color == Color.blue) {
+        if (color .equals( Color.blue)) {
             dis = move_Blue(c);
         }
-        if (color == Color.green) {
+        if (color .equals( Color.green)) {
             dis = move_Green(c);
         }
-        if (color == Color.YELLOW) {
+        if (color .equals( Color.YELLOW)) {
             dis = move_Yellow(c);
         }
         return dis;
